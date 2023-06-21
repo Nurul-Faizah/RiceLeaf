@@ -50,27 +50,29 @@ with tab2:
 
         elif menu == "Camera":
             st.write("Click the camera button below.")
+
             if st.button('Camera'):
-                
-                # Buat objek kamera
-                cap = cv2.VideoCapture(0)
-
-                # Baca frame kamera secara berulang-ulang
-                while True:
-                    ret, frame = cap.read()
-
-                    # Ubah format frame menjadi RGB
-                    frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-
-                    # Tampilkan frame kamera di Streamlit
-                    st.image(frame, channels='RGB', use_column_width=True)
-
-                    # Jika tombol 'Stop' ditekan, hentikan kamera
-                    if not st.button('Stop'):
-                        break
-
-                
-                # Hentikan kamera dan tutup window OpenCV
-                cap.release()
-                cv2.destroyAllWindows()
-
+                cap = cv2.VideoCapture(0)  # Menggunakan kamera utama
+            
+                ret, frame = cap.read()  # Membaca frame pertama dari kamera
+            
+                if ret:
+                    st.image(frame, channels="BGR")
+            
+                # Mengubah gambar menjadi bentuk yang sesuai untuk prediksi
+                img = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+                img = cv2.resize(img, (128, 128))
+                img = np.array(img) / 255.0
+                img = np.expand_dims(img, axis=0)
+            
+                # Melakukan prediksi menggunakan model atau tindakan lain
+                prediction = model.predict(img)
+                class_index = np.argmax(prediction[0])
+                class_name = classes[class_index]
+            
+                # Menampilkan hasil prediksi
+                st.success(f"Hasil Prediksi: {class_name}")
+            
+                # Menampilkan gambar hasil prediksi
+                st.image(img[0], channels="RGB", caption='Predicted Image', use_column_width=True)
+            
