@@ -52,7 +52,7 @@ with tab2:
             st.write("Click the camera button below.")
 
             if st.button('Camera'):
-                cap = cv2.VideoCapture()  # Menggunakan kamera utama
+                cap = cv2.VideoCapture(1)  # Menggunakan kamera utama
 
                 ret, frame = cap.read()  # Membaca frame pertama dari kamera
 
