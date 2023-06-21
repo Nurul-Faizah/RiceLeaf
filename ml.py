@@ -49,11 +49,16 @@ with tab2:
                 st.success(f"Hasil Prediksi: {class_name}")
 
         elif menu == "Camera":
-            st.write("Click the camera button below.")
             if st.button('Camera'):
+                if 'myimage' not in session_state.keys():
+                    session_state['myimage'] = None
+                st.write("Click the camera button below.")
                 # Capture image from camera
                 cap = st.camera_input("Take a picture")
-
+                if cap :
+                    session_state['myimage'] = cap
+                if session_state['myimage'] :
+                    st.image(session_state['myimage'])
                 if cap is not None:
                     # Read the image file buffer with OpenCV
                     bytes_data = cap.getvalue()
