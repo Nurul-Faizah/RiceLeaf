@@ -53,56 +53,27 @@ with tab2:
             if st.button('Camera'):
                 # Capture image from camera
                 cap = st.camera_input("Take a picture")
-            
-            
-                # Read the image file buffer with OpenCV
-                bytes_data = cap.getvalue()
-                cv2_img = cv2.imdecode(np.frombuffer(bytes_data, np.uint8), cv2.IMREAD_COLOR)
-                
-                # Convert image to RGB and resize
-                img_rgb = cv2.cvtColor(cv2_img, cv2.COLOR_BGR2RGB)
-                img_resized = cv2.resize(img_rgb, (128, 128))
-                
-                # Preprocess the image for prediction
-                img_normalized = img_resized / 255.0
-                img_expanded = np.expand_dims(img_normalized, axis=0)
-                
-                # Perform prediction using your model
-                prediction = model.predict(img_expanded)
-                class_index = np.argmax(prediction[0])
-                class_name = classes[class_index]
-                
-                # Display the predicted class
-                st.success(f"Predicted Class: {class_name}")
-                
-                # Display the captured image
-                st.image(img_resized, channels="RGB", caption='Captured Image', use_column_width=True)
-            # st.write("Click the camera button below.")
 
-            # if st.button('Camera'):
-            #     cap = cv2.VideoCapture(0)  # Menggunakan kamera utama
-
-            #     ret, frame = cap.read()  # Membaca frame pertama dari kamera
-
-            #     if ret:
-            #         st.image(frame, channels="BGR")
-
-            #     # Mengubah gambar menjadi bentuk yang sesuai untuk prediksi
-            #     # img = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-            #     img = cv2.resize(frame,(128, 128))
-            #     img = np.array(img) / 255.0
-            #     img = np.expand_dims(img, axis=0)
-
-            #     # Melakukan prediksi menggunakan model atau tindakan lain
-            #     prediction = model.predict(img)
-            #     class_index = np.argmax(prediction[0])
-            #     class_name = classes[class_index]
-
-            #     # Menampilkan hasil prediksi
-            #     st.success(f"Hasil Prediksi: {class_name}")
-
-            #     # Menampilkan gambar hasil prediksi
-            #     st.image(img[0], channels="RGB", caption='Predicted Image', use_column_width=True)
-            
-
-            
+                if cap is not None:
+                    # Read the image file buffer with OpenCV
+                    bytes_data = cap.getvalue()
+                    cv2_img = cv2.imdecode(np.frombuffer(bytes_data, np.uint8), cv2.IMREAD_COLOR)
+                    
+                    # Convert image to RGB and resize
+                    img_rgb = cv2.cvtColor(cv2_img, cv2.COLOR_BGR2RGB)
+                    img_resized = cv2.resize(img_rgb, (128, 128))
+                    
+                    # Preprocess the image for prediction
+                    img_normalized = img_resized / 255.0
+                    img_expanded = np.expand_dims(img_normalized, axis=0)
+                    
+                    # Perform prediction using your model
+                    prediction = model.predict(img_expanded)
+                    class_index = np.argmax(prediction[0])
+                    class_name = classes[class_index]
+                    
+                    # Display the predicted class
+                    st.success(f"Predicted Class: {class_name}")
+                    
+                    # Display the captured image
+                    st.image(img_resized, channels="RGB", caption='Captured Image', use_column_width=True)
