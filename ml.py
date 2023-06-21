@@ -53,27 +53,28 @@ with tab2:
 
             if st.button('Camera'):
                 cap = cv2.VideoCapture(0)  # Menggunakan kamera utama
-            
+
                 ret, frame = cap.read()  # Membaca frame pertama dari kamera
-            
+
                 if ret:
                     st.image(frame, channels="BGR")
-                    if not frame.empty():
-                        img = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-                        img = cv2.resize(img, (128, 128))
-                        img = np.array(img) / 255.0
-                        img = np.expand_dims(img, axis=0)
 
-                        # Melakukan prediksi menggunakan model atau tindakan lain
-                        prediction = model.predict(img)
-                        class_index = np.argmax(prediction[0])
-                        class_name = classes[class_index]
+                # Mengubah gambar menjadi bentuk yang sesuai untuk prediksi
+                img = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+                img = cv2.resize(img, (128, 128))
+                img = np.array(img) / 255.0
+                img = np.expand_dims(img, axis=0)
 
-                        # Menampilkan hasil prediksi
-                        st.success(f"Hasil Prediksi: {class_name}")
+                # Melakukan prediksi menggunakan model atau tindakan lain
+                prediction = model.predict(img)
+                class_index = np.argmax(prediction[0])
+                class_name = classes[class_index]
 
-                        # Menampilkan gambar hasil prediksi
-                        st.image(img[0], channels="RGB", caption='Predicted Image', use_column_width=True)
-                    else:
-                        st.warning("Failed to read frame from the camera.")
+                # Menampilkan hasil prediksi
+                st.success(f"Hasil Prediksi: {class_name}")
+
+                # Menampilkan gambar hasil prediksi
+                st.image(img[0], channels="RGB", caption='Predicted Image', use_column_width=True)
+                
+
             
