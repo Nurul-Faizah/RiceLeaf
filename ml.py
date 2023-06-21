@@ -61,7 +61,7 @@ with tab2:
 
                 # Mengubah gambar menjadi bentuk yang sesuai untuk prediksi
                 # img = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-                img = cv2.resize((128, 128))
+                img = cv2.resize(frame,(128, 128))
                 img = np.array(img) / 255.0
                 img = np.expand_dims(img, axis=0)
 
