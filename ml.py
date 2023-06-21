@@ -54,7 +54,7 @@ with tab2:
                 # Capture image from camera
                 cap = st.camera_input("Take a picture")
             
-                if cap is not None:
+                
                     # Read the image file buffer with OpenCV
                     bytes_data = cap.getvalue()
                     cv2_img = cv2.imdecode(np.frombuffer(bytes_data, np.uint8), cv2.IMREAD_COLOR)
