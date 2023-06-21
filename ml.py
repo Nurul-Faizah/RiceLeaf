@@ -54,7 +54,7 @@ with tab2:
             if st.button('Camera'):
                 cap = cv2.VideoCapture(0)  # Menggunakan kamera utama
 
-                ret, frame = cap.read(0)  # Membaca frame pertama dari kamera
+                ret, frame = cap.read(cap)  # Membaca frame pertama dari kamera
 
                 if ret:
                     st.image(frame, channels="BGR")
