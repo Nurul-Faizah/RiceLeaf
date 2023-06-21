@@ -93,7 +93,7 @@ with tab2:
     
 
                 
-                # Hentikan kamera dan tutup window OpenCV
-                cap.release()
-                cv2.destroyAllWindows()
+                # # Hentikan kamera dan tutup window OpenCV
+                # cap.release()
+                # cv2.destroyAllWindows()
 
